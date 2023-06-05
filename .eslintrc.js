@@ -15,6 +15,7 @@ module.exports = {
         allowShortCircuit: true,
         allowTernary: true
       }
-    ]
+    ],
+    'no-unused-vars': 1
   }
 }
