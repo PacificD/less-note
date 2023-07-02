@@ -8,7 +8,7 @@ module.exports = {
     quotes: [1, 'single'],
     'no-console': 1,
     'comma-dangle': [2, 'never'],
-    'space-before-function-paren': [1, 'always'],
+    'space-before-function-paren': [0, 'never'],
     'no-unused-expressions': [
       0,
       {
