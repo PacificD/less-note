@@ -9,6 +9,7 @@ module.exports = {
     'no-console': 1,
     'comma-dangle': [2, 'never'],
     'space-before-function-paren': 0,
+    'no-unused-vars': 1,
     'no-unused-expressions': [
       0,
       {
