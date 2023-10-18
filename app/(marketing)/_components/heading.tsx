@@ -1,38 +1,38 @@
 'use client'
 
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, RotateCw } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useConvexAuth } from 'convex/react'
-import { Spinner } from '@/components/spinner'
 import Link from 'next/link'
 import { SignInButton } from '@clerk/clerk-react'
 import { TextStaggeredLetterPullUp, FadeIn } from '@/components/motion-variants'
 
 const GettingStarted = () => {
   const { isAuthenticated, isLoading } = useConvexAuth()
+
   return (
-    <>
-      {isLoading && (
-        <div className='w-full flex items-center justify-center'>
-          <Spinner size='lg' />
-        </div>
-      )}
-      {!isLoading && isAuthenticated ? (
-        <Button asChild>
+    <FadeIn blur={8}>
+      <Button disabled={isLoading} asChild={!isLoading}>
+        {isLoading ? (
+          <>
+            <RotateCw className='mr-2 h-4 w-4 animate-spin' />
+            Please wait
+          </>
+        ) : isAuthenticated ? (
           <Link href='/documents'>
             Enter LessNote
             <ArrowRight className='w-4 h-4 ml-2' />
           </Link>
-        </Button>
-      ) : (
-        <SignInButton mode='modal'>
-          <Button>
-            Get LessNote free
-            <ArrowRight className='w-4 h-4 ml-2' />
-          </Button>
-        </SignInButton>
-      )}
-    </>
+        ) : (
+          <SignInButton mode='modal'>
+            <Button>
+              Get LessNote free
+              <ArrowRight className='w-4 h-4 ml-2' />
+            </Button>
+          </SignInButton>
+        )}
+      </Button>
+    </FadeIn>
   )
 }
 
@@ -48,15 +48,20 @@ const Heading = () => {
           dark:from-sky-600 dark:via-cyan-400 dark:to-cyan-200
           bg-clip-text text-transparent text-4xl sm:text-5xl md:text-6xl'
           words='LessNote'
-          delay={0.08}
+          delay={0.1}
           y={50}
         />
       </h1>
-      {/* <FadeIn as='h3' className='text-base sm:text-xl md:text-2xl font-medium'> */}
-      {/*   LessNote is the connected workspace where */}
-      {/*   <br /> */}
-      {/*   better, faster work happens. */}
-      {/* </FadeIn> */}
+      <FadeIn
+        as='h3'
+        duration={1.2}
+        className='text-base sm:text-xl md:text-2xl font-medium'
+      >
+        LessNote is the connected workspace where
+        <br />
+        better, faster work happens.
+      </FadeIn>
+      <GettingStarted />
     </div>
   )
 }
