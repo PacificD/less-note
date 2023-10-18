@@ -1,12 +1,12 @@
-'use clinet'
-
-import { CustomDomComponent, motion, Variants } from 'framer-motion'
+'use client'
+import { CustomDomComponent, motion, Variant } from 'framer-motion'
 import React, { ReactHTML } from 'react'
 
 interface IProps extends React.PropsWithChildren {
   blur?: number
   duration?: number
-  variants?: Variants
+  hiddenVariant?: Variant
+  visibleVariant?: Variant
   as?: keyof ReactHTML
   className?: string
 }
@@ -15,13 +15,18 @@ const FadeIn = ({
   as = 'div',
   duration = 1,
   blur = 0,
-  variants,
+  hiddenVariant,
+  visibleVariant,
   className,
   children
 }: IProps) => {
-  const defaultVariants = {
-    hidden: { filter: blur ? `blur(${blur}px)` : 'blur(0px)', opacity: 0 },
-    visible: { filter: 'blur(0px)', opacity: 1 }
+  const motionVariants = {
+    hidden: {
+      filter: blur ? `blur(${blur}px)` : 'blur(0px)',
+      opacity: 0,
+      ...hiddenVariant
+    },
+    visible: { filter: 'blur(0px)', opacity: 1, ...visibleVariant }
   }
   const Motion: CustomDomComponent<{ className: string | undefined }> =
     motion(as)
@@ -31,10 +36,7 @@ const FadeIn = ({
       initial='hidden'
       animate='visible'
       transition={{ duration }}
-      variants={{
-        ...defaultVariants,
-        ...variants
-      }}
+      variants={motionVariants}
       className={className}
     >
       {children}
